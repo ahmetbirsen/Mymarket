@@ -15,4 +15,5 @@
     <string name="add_to_cart_successfully">Product added to cart successfully</string>
     <string name="remove_from_cart_successfully">Product removed from cart successfully</string>
     <string name="plus_symbol">+</string>
+    <string name="unexpected_error">An unexpected error occurred</string>
 </resources>

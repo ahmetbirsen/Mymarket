@@ -34,6 +34,15 @@ interface MarketDao {
         """)
     suspend fun getProductById(id: String): ProductDto?
 
+
+    @Query("""SELECT 
+            product.*, 
+            cart_products.quantity
+        FROM product
+    INNER JOIN cart_products ON product.id = cart_products.id
+        """)
+    fun getCartProducts(): Flow<List<ProductDto>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: Product)
 
@@ -61,12 +70,15 @@ interface MarketDao {
     @Query("UPDATE cart_products SET quantity = quantity - 1 WHERE id = :cartProductId")
     suspend fun decreaseProductCount(cartProductId: String)
 
-    @Query("SELECT * FROM cart_products")
-    fun getCartProducts(): Flow<List<CartProduct>>
-
     @Query("SELECT COUNT(*) FROM cart_products")
     fun getCartProductCount(): Flow<Int>
 
     @Delete
     suspend fun deleteProduct(product: Product)
+
+    @Query("DELETE FROM cart_products")
+    suspend fun clearCartProducts()
+
+    @Query("DELETE FROM favorite_products")
+    suspend fun clearFavoriteProducts()
 }
