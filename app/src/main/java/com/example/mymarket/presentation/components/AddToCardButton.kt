@@ -22,13 +22,14 @@ import com.example.mymarket.util.StringExt.empty
 fun CustomButton(
     modifier: Modifier = Modifier,
     title : String = String.empty,
+    backgroundColor : Color = Color(0xFF2A59FE),
     onClick : () -> Unit = {}
 ) {
     Box(modifier = modifier
         .clickable { onClick() }
         .fillMaxWidth()
         .background(
-            color = Color(0xFF2A59FE),
+            color = backgroundColor,
             shape = RoundedCornerShape(8.dp)
         )
         .padding(8.dp)

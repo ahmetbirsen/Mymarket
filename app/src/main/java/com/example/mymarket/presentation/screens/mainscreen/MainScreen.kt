@@ -55,14 +55,28 @@ fun BottomBar(navController: NavHostController) {
 fun RowScope.AddItem(
     screen: BottomBarScreen,
     currentDestination: NavDestination?,
-    navController: NavHostController
+    navController: NavHostController,
+    itemCount: Int = 0
 ) {
     BottomNavigationItem(
         icon = {
+            if (screen == BottomBarScreen.Basket && itemCount > 0) {
+                BadgedBox(
+                    badge = {
+                        Badge { Text(text = itemCount.toString()) }
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = screen.iconRes),
+                        contentDescription = "Basket Icon"
+                    )
+                }
+            } else {
             Icon(
                 painter = painterResource(id = screen.iconRes),
                 contentDescription = "Navigation Icon"
             )
+        }
         },
         selected = currentDestination?.hierarchy?.any {
             it.route == screen.route
