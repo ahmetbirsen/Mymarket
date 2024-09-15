@@ -1,4 +1,4 @@
-package com.example.mymarket.presentation.home
+package com.example.mymarket.presentation.screens.detail
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class DetailViewModel @Inject constructor(
     private val getProductUSeCase: GetProductsUseCase
 ): ViewModel() {
 
-    private val _state = mutableStateOf(HomeState())
-    val state : State<HomeState> = _state
+    private val _state = mutableStateOf(DetailState())
+    val state : State<DetailState> = _state
 
     private var job : Job? = null
 
@@ -29,23 +29,23 @@ class HomeViewModel @Inject constructor(
         job = getProductUSeCase.executeGetProducts().onEach {
             when (it) {
                 is Resource.Success -> {
-                    _state.value = HomeState(products = it.data ?: emptyList())
+                    _state.value = DetailState(products = it.data ?: emptyList())
                 }
 
                 is Resource.Error -> {
-                    _state.value = HomeState(error = it.message ?: "")
+                    _state.value = DetailState(error = it.message ?: "")
                 }
 
                 is Resource.Loading -> {
-                    _state.value = HomeState(isLoading = true)
+                    _state.value = DetailState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun onEvent(event: HomeEvent) {
+    fun onEvent(event: DetailEvent) {
         when (event) {
-            is HomeEvent.SearchProduct -> {
+            is DetailEvent.SearchProduct -> {
                 getProducts()
             }
         }

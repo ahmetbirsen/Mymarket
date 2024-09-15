@@ -13,7 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mymarket.presentation.home.views.HomeScreen
+import com.example.mymarket.presentation.screens.home.views.HomeScreen
+import com.example.mymarket.presentation.screens.mainscreen.MainScreen
 import com.example.mymarket.presentation.ui.theme.MyMarketTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,18 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyMarketTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                   val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
-                        composable(route= Screen.HomeScreen.route){
-                            HomeScreen(navController = navController)
-                        }
-                    }
-                }
+               MainScreen()
             }
         }
     }
