@@ -32,7 +32,7 @@ import coil.compose.rememberImagePainter
 import com.example.mymarket.R
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.presentation.components.CustomButton
-import com.example.mymarket.util.StringExt.formatPriceWithZero
+import com.example.mymarket.domain.util.StringExt.formatPriceWithZero
 
 
 @OptIn(ExperimentalCoilApi::class)

@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mymarket.presentation.Screen
+import androidx.navigation.navArgument
+import com.example.mymarket.presentation.util.Screen
 import com.example.mymarket.presentation.screens.basket.views.BasketScreenRoot
 import com.example.mymarket.presentation.screens.detail.views.DetailScreenRoot
 import com.example.mymarket.presentation.screens.home.views.HomeScreen
@@ -34,7 +36,14 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
         composable(route = BottomBarScreen.Profile.route) {
             //ProfileScreen()
         }
-        composable(route = Screen.DetailScreen.route) {
+        composable(route = Screen.DetailScreen.route +
+                "/{productId}",
+            arguments = listOf(
+                navArgument(name = "productId") {
+                    type = NavType.StringType
+                }
+            )
+            ) {
             DetailScreenRoot(
                 navController = navController
             )

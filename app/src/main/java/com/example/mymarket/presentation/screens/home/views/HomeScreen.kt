@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.example.mymarket.presentation.components.CustomButton
 import com.example.mymarket.presentation.components.SearchTextFieldComponent
 import com.example.mymarket.presentation.screens.home.HomeViewModel
+import com.example.mymarket.presentation.util.Screen
 
 @Composable
 fun HomeScreen(
@@ -82,7 +83,7 @@ fun HomeScreen(
                 content = {
                     items(state.products) { product ->
                         ProductListRow(product = product, onItemClick = {
-                            navController.navigate("detail_screen")
+                            navController.navigate("${Screen.DetailScreen.route}/${it.id}")
                         })
                     }
                 }

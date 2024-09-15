@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymarket.domain.usecase.getproducts.GetProductsUseCase
-import com.example.mymarket.util.Resource
+import com.example.mymarket.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -26,7 +26,8 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getProducts() {
-        job = getProductUSeCase.executeGetProducts().onEach {
+        job?.cancel()
+        job = getProductUSeCase().onEach {
             when (it) {
                 is Resource.Success -> {
                     _state.value = HomeState(products = it.data ?: emptyList())

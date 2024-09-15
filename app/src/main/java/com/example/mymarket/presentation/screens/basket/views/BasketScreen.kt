@@ -34,8 +34,8 @@ import com.example.mymarket.presentation.components.DefaultNavigationBar
 import com.example.mymarket.presentation.components.ProductCounter
 import com.example.mymarket.presentation.screens.basket.BasketState
 import com.example.mymarket.presentation.screens.basket.BasketViewModel
-import com.example.mymarket.util.StringExt.empty
-import com.example.mymarket.util.StringExt.formatPrice
+import com.example.mymarket.domain.util.StringExt.empty
+import com.example.mymarket.domain.util.StringExt.formatPrice
 
 @Composable
 fun BasketScreenRoot(
