@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.mymarket.presentation.util.Screen
 import com.example.mymarket.presentation.screens.basket.views.BasketScreenRoot
-import com.example.mymarket.presentation.screens.detail.views.DetailScreenRoot
+import com.example.mymarket.presentation.screens.detail.views.DetailScreen
 import com.example.mymarket.presentation.screens.home.views.HomeScreen
 
 @Composable
@@ -44,7 +44,7 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
                 }
             )
             ) {
-            DetailScreenRoot(
+            DetailScreen(
                 navController = navController
             )
         }

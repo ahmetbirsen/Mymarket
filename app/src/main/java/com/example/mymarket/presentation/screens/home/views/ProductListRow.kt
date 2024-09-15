@@ -30,25 +30,31 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.mymarket.R
+import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.Product
+import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.presentation.components.CustomButton
 import com.example.mymarket.domain.util.StringExt.formatPriceWithZero
+import com.example.mymarket.presentation.components.ProductCounter
 
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ProductListRow(
     modifier: Modifier = Modifier,
-    product: Product,
-    onItemClick: (Product) -> Unit? = {},
-    onFavoriteClick: (Product) -> Unit? = {}
+    product: ProductDto,
+    onItemClick: (ProductDto) -> Unit? = {},
+    onAddToCartClick : () -> Unit? = {},
+    onDecreaseClick: () -> Unit? = {},
+    onIncreaseClick: () -> Unit? = {},
+    onFavoriteClick: (ProductDto) -> Unit? = {}
 ) {
     val isFavorite = remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
-        .clickable { onItemClick(product) }
-        .shadow(elevation = 1.dp, shape = RoundedCornerShape(1.dp))
+            .clickable { onItemClick(product) }
+            .shadow(elevation = 1.dp, shape = RoundedCornerShape(1.dp))
     ) {
         Column(
             modifier = Modifier.padding(10.dp),
@@ -71,7 +77,7 @@ fun ProductListRow(
                             isFavorite.value = !isFavorite.value
                         }
                         .padding(4.dp),
-                    painter = if (isFavorite.value == true) painterResource(id = R.drawable.ic_favorites_yellow) else painterResource(
+                    painter = if (product.isFavorite == true) painterResource(id = R.drawable.ic_favorites_yellow) else painterResource(
                         id = R.drawable.ic_favorites
                     ),
                     contentDescription = "",
@@ -109,9 +115,24 @@ fun ProductListRow(
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
-            CustomButton(
-                title = stringResource(id = R.string.add_to_card)
-            )
+            if (product.quantity > 0){
+                ProductCounter(
+                    totalCount = product.quantity.toString(),
+                    decreaseClick = {
+                        onDecreaseClick()
+                    },
+                    increaseClick = {
+                        onIncreaseClick()
+                    }
+                )
+            }else{
+                CustomButton(
+                    onClick = {
+                        onAddToCartClick()
+                    },
+                    title = stringResource(id = R.string.add_to_card)
+                )
+            }
         }
     }
 }
@@ -120,7 +141,7 @@ fun ProductListRow(
 @Composable
 private fun PreviewItem() {
     ProductListRow(
-        product = Product(
+        product = ProductDto(
             createdAt = "2023-07-17T07:21:02.529Z",
             name = "Bentley Focus",
             image = "https://loremflickr.com/640/480/food",

@@ -10,4 +10,9 @@
     <string name="search">Search</string>
     <string name="filters">Filters:</string>
     <string name="select_filters">Select Filter</string>
+    <string name="remove_favorite_successfully">Product removed from favorites</string>
+    <string name="add_favorite_successfully">Product added to favorites</string>
+    <string name="add_to_cart_successfully">Product added to cart successfully</string>
+    <string name="remove_from_cart_successfully">Product removed from cart successfully</string>
+    <string name="plus_symbol">+</string>
 </resources>

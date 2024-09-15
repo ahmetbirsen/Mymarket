@@ -3,6 +3,7 @@ package com.example.mymarket.domain.usecase.getProductById
 import android.database.sqlite.SQLiteException
 import com.example.mymarket.data.datasource.locale.MarketDao
 import com.example.mymarket.domain.model.Product
+import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.domain.repository.ProductRepository
 import com.example.mymarket.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class GetProductByIdUseCase @Inject constructor(
     private val dao: MarketDao
 ) {
-    suspend operator fun invoke(id: String): Flow<Resource<Product>> = flow {
+    suspend operator fun invoke(id: String): Flow<Resource<ProductDto>> = flow {
         emit(Resource.Loading())
         val product = dao.getProductById(id)
         if (product != null) {
