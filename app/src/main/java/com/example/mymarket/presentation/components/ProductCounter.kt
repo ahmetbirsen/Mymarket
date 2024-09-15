@@ -19,21 +19,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymarket.R
+import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.Product
+import com.example.mymarket.domain.util.StringExt.empty
 
 
 @Composable
 fun ProductCounter(
     modifier: Modifier = Modifier,
-    decreaseClick : (Product) -> Unit = {},
-    increaseClick : (Product) -> Unit = {},
+    totalCount: String = String.empty,
+    decreaseClick : () -> Unit = {},
+    increaseClick : () -> Unit = {},
 ) {
-    val totalCount = "5"
     Row(
         modifier = modifier
     ) {
         Box(modifier = Modifier
-            .clickable { decreaseClick(Product()) }
+            .clickable { decreaseClick() }
             .weight(1f)
             .background(color = Color(0xFFDADEE4), shape = RoundedCornerShape(4.dp) )
         )
@@ -62,14 +64,14 @@ fun ProductCounter(
             )
         }
         Box(modifier = Modifier
-            .clickable { increaseClick(Product()) }
+            .clickable { increaseClick() }
             .weight(1f)
             .background(color = Color(0xFFDADEE4), shape = RoundedCornerShape(4.dp) )
         )
         {
             Text(
                 modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp).fillMaxWidth(),
-                text = stringResource(id = R.string.minus_symbol),
+                text = stringResource(id = R.string.plus_symbol),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     textAlign = TextAlign.Center,
                     color = Color.Gray

@@ -5,24 +5,67 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
+import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
+import com.example.mymarket.domain.model.ProductDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MarketDao {
 
-    @Query("SELECT * FROM product")
-    fun getProducts() : Flow<List<Product>>
+    @Query("""SELECT 
+            product.*, 
+            cart_products.quantity,
+            EXISTS (SELECT id FROM favorite_products WHERE id = product.id)
+             AS isFavorite
+        FROM product 
+        LEFT JOIN cart_products ON product.id = cart_products.id
+        LEFT JOIN favorite_products ON product.id = favorite_products.id
+        """)
+    fun getProducts(): Flow<List<ProductDto>>
 
-    @Query("SELECT * FROM product WHERE id = :id")
-    suspend fun getProductById(id: String): Product?
+    @Query("""SELECT 
+        product.*, 
+        cart_products.quantity FROM product 
+        LEFT JOIN cart_products ON product.id = cart_products.id
+        WHERE product.id = :id
+        """)
+    suspend fun getProductById(id: String): ProductDto?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: Product)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteProduct(product: FavoriteProduct)
+
+    @Query("SELECT * FROM favorite_products WHERE id = :productId LIMIT 1")
+    suspend fun isProductFavorite(productId: String): FavoriteProduct?
+
+    @Query("DELETE FROM favorite_products WHERE id = :productId")
+    suspend fun deleteFavoriteById(productId: String)
+
+    @Insert
+    suspend fun addProductToCart(cartProduct: CartProduct)
+
+    @Update
+    suspend fun updateProductCount(cartProduct: CartProduct)
+
+    @Query("UPDATE cart_products SET quantity = quantity + 1 WHERE id = :cartProductId")
+    suspend fun increaseProductCount(cartProductId: String)
+
+    @Query("DELETE FROM cart_products WHERE id = :cartProductId")
+    suspend fun removeProductFromCart(cartProductId: String)
+
+    @Query("UPDATE cart_products SET quantity = quantity - 1 WHERE id = :cartProductId")
+    suspend fun decreaseProductCount(cartProductId: String)
+
+    @Query("SELECT * FROM cart_products")
+    fun getCartProducts(): Flow<List<CartProduct>>
+
+    @Query("SELECT COUNT(*) FROM cart_products")
+    fun getCartProductCount(): Flow<Int>
 
     @Delete
     suspend fun deleteProduct(product: Product)

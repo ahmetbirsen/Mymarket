@@ -1,6 +1,7 @@
 package com.example.mymarket.domain.usecase.getproductsfromroom
 
 import com.example.mymarket.domain.model.Product
+import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.domain.repository.ProductRepository
 import com.example.mymarket.domain.util.OrderType
 import com.example.mymarket.domain.util.ProductOrder
@@ -13,7 +14,7 @@ class GetProductsFromRoom @Inject constructor(
 ) {
     operator fun invoke(
         productOrder : ProductOrder = ProductOrder.Date(OrderType.Descending)
-    ) : Flow<List<Product>>{
+    ) : Flow<List<ProductDto>>{
         return productRepository.getProductsFromRoom().map { products ->
             when(productOrder.orderType){
                 is OrderType.Ascending -> {

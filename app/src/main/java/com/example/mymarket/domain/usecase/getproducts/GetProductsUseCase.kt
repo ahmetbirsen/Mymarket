@@ -2,6 +2,7 @@ package com.example.mymarket.domain.usecase.getproducts
 
 import com.example.mymarket.data.datasource.locale.MarketDao
 import com.example.mymarket.domain.model.Product
+import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.domain.repository.ProductRepository
 import com.example.mymarket.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ class GetProductsUseCase @Inject constructor(
     private val productRepository: ProductRepository,
     private val dao: MarketDao
 ) {
-    operator fun invoke() : Flow<Resource<List<Product>>> = flow {
+    operator fun invoke() : Flow<Resource<List<ProductDto>>> = flow {
         try {
             emit(Resource.Loading())
             val productsFromApi = productRepository.getProducts()
