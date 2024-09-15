@@ -10,6 +10,9 @@ import com.example.mymarket.data.repository.ProductRepositoryImpl
 import com.example.mymarket.domain.repository.ProductRepository
 import com.example.mymarket.domain.usecase.MarketUseCases
 import com.example.mymarket.domain.usecase.addproducttocart.AddProductToCartUseCase
+import com.example.mymarket.domain.usecase.clearCartProducts.ClearCartProducts
+import com.example.mymarket.domain.usecase.clearCartProducts.ClearFavoriteProducts
+import com.example.mymarket.domain.usecase.completeorder.CompleteOrderUseCase
 import com.example.mymarket.domain.usecase.decreasecartproduct.DecreaseCartProductUseCase
 import com.example.mymarket.domain.usecase.deletefavorite.DeleteFavoriteProductUseCase
 import com.example.mymarket.domain.usecase.getProductById.GetProductByIdUseCase
@@ -88,7 +91,10 @@ object NetworkModule {
             removeProductFromCartUseCase = RemoveProductFromCartUseCase(productRepository = repository),
             updateCartProductUseCase = UpdateCartProductUseCase(productRepository = repository),
             increaseCartProductUseCase = IncreaseCartProductUseCase(productRepository = repository),
-            decreaseCartProductUseCase = DecreaseCartProductUseCase(productRepository = repository)
+            decreaseCartProductUseCase = DecreaseCartProductUseCase(productRepository = repository),
+            clearCartProducts = ClearCartProducts(productRepository = repository),
+            clearFavoriteProducts = ClearFavoriteProducts(productRepository = repository),
+            completeOrderUseCase = CompleteOrderUseCase(productRepository = repository)
         )
     }
 }

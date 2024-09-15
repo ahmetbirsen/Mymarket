@@ -42,6 +42,14 @@ class ProductRepositoryImpl @Inject constructor(
         dao.deleteFavoriteById(productId)
     }
 
+    override suspend fun clearCartProducts() {
+        dao.clearCartProducts()
+    }
+
+    override suspend fun clearFavoriteProducts() {
+        dao.clearFavoriteProducts()
+    }
+
     override suspend fun addProductToCart(cartProduct: CartProduct) {
         dao.addProductToCart(cartProduct)
     }
@@ -62,7 +70,7 @@ class ProductRepositoryImpl @Inject constructor(
         dao.removeProductFromCart(cartProductId = cartProductId)
     }
 
-    override fun getCartProducts(): Flow<List<CartProduct>> {
+    override fun getCartProducts(): Flow<List<ProductDto>> {
         return dao.getCartProducts()
     }
 

@@ -16,12 +16,14 @@ interface ProductRepository {
     suspend fun insertFavoriteProduct(product: FavoriteProduct)
     suspend fun deleteFavoriteProduct(productId: String)
 
+    suspend fun clearCartProducts()
+    suspend fun clearFavoriteProducts()
     suspend fun addProductToCart(cartProduct: CartProduct)
     suspend fun updateProductCount(cartProduct: CartProduct)
     suspend fun increaseProductCount(cartProductId: String)
     suspend fun decreaseProductCount(cartProductId: String)
     suspend fun removeProductFromCart(cartProductId: String)
-    fun getCartProducts(): Flow<List<CartProduct>>
+    fun getCartProducts(): Flow<List<ProductDto>>
     fun getCartProductCount(): Flow<Int>
     suspend fun isFavorite(productId: String): Boolean
 

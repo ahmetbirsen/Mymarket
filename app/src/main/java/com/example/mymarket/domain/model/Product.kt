@@ -36,7 +36,7 @@ data class ProductDto(
     @SerializedName("image")
     var image: String? = String.empty,
     @SerializedName("price")
-    var price: String? = String.empty,
+    var price: String = String.empty,
     @SerializedName("description")
     var description: String? = String.empty,
     @SerializedName("model")

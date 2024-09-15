@@ -8,8 +8,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.mymarket.presentation.screens.basket.views.BasketScreen
 import com.example.mymarket.presentation.util.Screen
-import com.example.mymarket.presentation.screens.basket.views.BasketScreenRoot
 import com.example.mymarket.presentation.screens.detail.views.DetailScreen
 import com.example.mymarket.presentation.screens.home.views.HomeScreen
 
@@ -26,15 +26,13 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
             )
         }
         composable(route = BottomBarScreen.Basket.route) {
-            BasketScreenRoot(
+            BasketScreen(
                 navController = navController
             )
         }
         composable(route = BottomBarScreen.Favorite.route) {
-            //SettingsScreen()
         }
         composable(route = BottomBarScreen.Profile.route) {
-            //ProfileScreen()
         }
         composable(route = Screen.DetailScreen.route +
                 "/{productId}",

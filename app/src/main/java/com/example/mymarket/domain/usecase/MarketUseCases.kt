@@ -1,6 +1,9 @@
 package com.example.mymarket.domain.usecase
 
 import com.example.mymarket.domain.usecase.addproducttocart.AddProductToCartUseCase
+import com.example.mymarket.domain.usecase.clearCartProducts.ClearCartProducts
+import com.example.mymarket.domain.usecase.clearCartProducts.ClearFavoriteProducts
+import com.example.mymarket.domain.usecase.completeorder.CompleteOrderUseCase
 import com.example.mymarket.domain.usecase.decreasecartproduct.DecreaseCartProductUseCase
 import com.example.mymarket.domain.usecase.deletefavorite.DeleteFavoriteProductUseCase
 import com.example.mymarket.domain.usecase.getProductById.GetProductByIdUseCase
@@ -26,4 +29,7 @@ data class MarketUseCases(
     val updateCartProductUseCase: UpdateCartProductUseCase,
     val increaseCartProductUseCase: IncreaseCartProductUseCase,
     val decreaseCartProductUseCase: DecreaseCartProductUseCase,
+    val clearCartProducts: ClearCartProducts,
+    val clearFavoriteProducts: ClearFavoriteProducts,
+    val completeOrderUseCase: CompleteOrderUseCase
 )

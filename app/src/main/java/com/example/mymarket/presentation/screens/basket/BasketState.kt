@@ -5,7 +5,9 @@ import com.example.mymarket.domain.model.ProductDto
 
 data class BasketState (
     val isLoading: Boolean = false,
-    val products: List<ProductDto> = emptyList(),
-    val product: Product? = null,
-    val error: String = ""
+    val myCartProducts: List<ProductDto> = emptyList(),
+    val totalPrice : Double = 0.0,
+    val product: ProductDto = ProductDto(),
+    val error: String = "",
+    val orderedSuccess : Boolean = false
 )
