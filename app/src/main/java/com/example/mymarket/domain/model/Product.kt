@@ -1,24 +1,28 @@
 package com.example.mymarket.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.mymarket.domain.util.StringExt.empty
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Product(
     @SerializedName("createdAt")
-    val createdAt: String? = null,
+    var createdAt: String? = String.empty,
     @SerializedName("name")
-    val name: String? = null,
+    var name: String? = String.empty,
     @SerializedName("image")
-    val image: String? = null,
+    var image: String? = String.empty,
     @SerializedName("price")
-    val price: String? = null,
+    var price: String? = String.empty,
     @SerializedName("description")
-    val description: String? = null,
+    var description: String? = String.empty,
     @SerializedName("model")
-    val model: String? = null,
+    var model: String? = String.empty,
     @SerializedName("brand")
-    val brand: String? = null,
+    var brand: String? = String.empty,
     @SerializedName("id")
-    val id: String? = null,
+    @PrimaryKey var id: String = String.empty,
     @SerializedName("isFavorite")
-    val isFavorite: Boolean? = null
+    var isFavorite: Boolean? = false
 )

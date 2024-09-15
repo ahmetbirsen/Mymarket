@@ -1,4 +1,4 @@
-package com.example.mymarket.data.remote
+package com.example.mymarket.data.datasource.remote
 
 import com.example.mymarket.domain.model.Product
 import retrofit2.http.GET

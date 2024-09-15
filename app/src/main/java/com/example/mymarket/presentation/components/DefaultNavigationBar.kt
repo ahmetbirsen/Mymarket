@@ -64,12 +64,13 @@ fun DefaultNavigationBar(
 
         },
         actions = actions ?: {},
-        windowInsets = WindowInsets(top = 0), colors = TopAppBarColors(
+        windowInsets = WindowInsets(top = 0),
+        /*colors = TopAppB(
             containerColor = Color(0xFF2A59FE),
             titleContentColor = Color.White,
             navigationIconContentColor = Color.White,
             scrolledContainerColor = Color.White,
             actionIconContentColor = Color.White,
-        )
+        )*/
     )
 }

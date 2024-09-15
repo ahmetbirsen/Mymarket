@@ -1,4 +1,4 @@
-package com.example.mymarket.util
+package com.example.mymarket.domain.util
 
 import java.text.NumberFormat
 import java.util.Locale
