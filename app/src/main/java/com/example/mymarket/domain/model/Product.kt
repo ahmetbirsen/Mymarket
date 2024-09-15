@@ -18,5 +18,7 @@ data class Product(
     @SerializedName("brand")
     val brand: String? = null,
     @SerializedName("id")
-    val id: String? = null
+    val id: String? = null,
+    @SerializedName("isFavorite")
+    val isFavorite: Boolean? = null
 )
