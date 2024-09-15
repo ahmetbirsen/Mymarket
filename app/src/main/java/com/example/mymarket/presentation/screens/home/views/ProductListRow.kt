@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,10 +45,10 @@ fun ProductListRow(
 ) {
     val isFavorite = remember { mutableStateOf(false) }
 
-    Box(modifier = modifier
+    Box(
+        modifier = modifier
         .clickable { onItemClick(product) }
-        .shadow(elevation = 2.dp, shape = RoundedCornerShape(1.dp))
-        .padding(2.dp)
+        .shadow(elevation = 1.dp, shape = RoundedCornerShape(1.dp))
     ) {
         Column(
             modifier = Modifier.padding(10.dp),
@@ -54,8 +56,10 @@ fun ProductListRow(
             Box(modifier = Modifier) {
                 Image(
                     modifier = Modifier
-                        .size(150.dp, 150.dp),
+                        .fillMaxWidth()
+                        .height(150.dp),
                     painter = rememberImagePainter(data = product.image),
+                    contentScale = ContentScale.Fit,
                     contentDescription = product.description,
                 )
                 Icon(
