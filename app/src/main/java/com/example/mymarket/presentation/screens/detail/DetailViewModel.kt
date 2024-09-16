@@ -156,6 +156,7 @@ class DetailViewModel @Inject constructor(
                             message = getString(R.string.add_to_cart_successfully),
                             isLoading = false
                         )
+                        getProductById(product.id)
                     }
 
                     is Resource.Error -> {
