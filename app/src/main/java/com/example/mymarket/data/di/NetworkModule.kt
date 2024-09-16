@@ -2,9 +2,14 @@ package com.example.mymarket.data.di
 
 import android.app.Application
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
+import com.example.mymarket.core.util.dataStore
 import com.example.mymarket.data.datasource.locale.MarketDao
 import com.example.mymarket.data.datasource.locale.MarketDatabase
+import com.example.mymarket.data.datasource.locale.datastore.DataStoreManagement
+import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.data.datasource.remote.ProductService
 import com.example.mymarket.data.repository.ProductRepositoryImpl
 import com.example.mymarket.domain.repository.ProductRepository
@@ -78,23 +83,35 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMarketUseCases(repository: ProductRepository, db: MarketDatabase): MarketUseCases {
+    fun provideDataStorePreference(@ApplicationContext context: Context): DataStore<Preferences>{
+        return context.dataStore
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStoreManager(dataStore: DataStore<Preferences>): DataStoreManager{
+        return DataStoreManager(dataStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMarketUseCases(repository: ProductRepository, db: MarketDatabase, dataStore: DataStoreManager): MarketUseCases {
         return MarketUseCases(
             getProductsUseCase = GetProductsUseCase(repository, db.marketDao()),
             getProductById = GetProductByIdUseCase(dao = db.marketDao()),
             insertFavoriteProductUseCase = InsertFavoriteProductUseCase(dao = db.marketDao()),
             isProductFavorite = IsProductFavorite(repository = repository),
             deleteFavoriteProductUseCase = DeleteFavoriteProductUseCase(productRepository = repository),
-            addProductToCartUseCase = AddProductToCartUseCase(productRepository = repository),
+            addProductToCartUseCase = AddProductToCartUseCase(productRepository = repository, dataStore),
             getCartProductCountUseCase = GetCartProductCountUseCase(repository = repository),
             getCartProductsUseCase = GetCartProductsUseCase(productRepository = repository),
-            removeProductFromCartUseCase = RemoveProductFromCartUseCase(productRepository = repository),
+            removeProductFromCartUseCase = RemoveProductFromCartUseCase(productRepository = repository, dataStore),
             updateCartProductUseCase = UpdateCartProductUseCase(productRepository = repository),
             increaseCartProductUseCase = IncreaseCartProductUseCase(productRepository = repository),
             decreaseCartProductUseCase = DecreaseCartProductUseCase(productRepository = repository),
             clearCartProducts = ClearCartProducts(productRepository = repository),
             clearFavoriteProducts = ClearFavoriteProducts(productRepository = repository),
-            completeOrderUseCase = CompleteOrderUseCase(productRepository = repository)
+            completeOrderUseCase = CompleteOrderUseCase(productRepository = repository, dataStore)
         )
     }
 }
