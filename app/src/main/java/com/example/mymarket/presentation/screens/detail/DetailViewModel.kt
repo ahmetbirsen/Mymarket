@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymarket.R
+import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto

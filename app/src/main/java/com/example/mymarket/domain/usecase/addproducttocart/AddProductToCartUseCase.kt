@@ -2,18 +2,21 @@ package com.example.mymarket.domain.usecase.addproducttocart
 
 import android.database.sqlite.SQLiteException
 import com.example.mymarket.data.datasource.locale.MarketDao
+import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.repository.ProductRepository
 import com.example.mymarket.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
 class AddProductToCartUseCase @Inject constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val dataStoreManager: DataStoreManager
 ) {
     suspend operator fun invoke(product: Product): Flow<Resource<Unit>> = flow {
         try {
@@ -24,6 +27,7 @@ class AddProductToCartUseCase @Inject constructor(
                     quantity = 1
                 )
             )
+            dataStoreManager.updateCartCount(productRepository.getCartProductCount().first())
             emit(Resource.Success(Unit))
         } catch (e: SQLiteException) {
             emit(Resource.Error("Database error: ${e.localizedMessage}"))

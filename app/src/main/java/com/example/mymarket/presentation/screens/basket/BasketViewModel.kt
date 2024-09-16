@@ -3,6 +3,7 @@ package com.example.mymarket.presentation.screens.basket
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymarket.R
+import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.domain.usecase.MarketUseCases
 import com.example.mymarket.domain.util.Resource
@@ -13,6 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -22,11 +24,10 @@ import javax.inject.Inject
 class BasketViewModel @Inject constructor(
     private val marketUseCases: MarketUseCases,
     private val resourceManager: ResourceManager,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(BasketState())
     val state: StateFlow<BasketState> = _state.asStateFlow()
-
     private var job: Job? = null
 
     fun getString(resId: Int) = resourceManager.getString(resId)
@@ -85,6 +86,7 @@ class BasketViewModel @Inject constructor(
                     is Resource.Success -> {
                         _state.value = _state.value.copy(isLoading = false)
                         getCartProducts()
+                        //dataStoreManager.updateCartCount(marketUseCases.getCartProductCountUseCase().first())
                     }
 
                     is Resource.Error -> {
@@ -122,6 +124,7 @@ class BasketViewModel @Inject constructor(
             try {
                 marketUseCases.completeOrderUseCase()
                 _state.value = _state.value.copy(isLoading = false, orderedSuccess = true)
+                getCartProducts()
             } catch (e: Exception) {
                 _state.value = _state.value.copy(error = e.message ?: String.empty)
             }
@@ -138,6 +141,7 @@ class BasketViewModel @Inject constructor(
             is BasketEvent.DecreaseCartProduct -> {
                 decreaseCartProduct(event.product)
             }
+
             is BasketEvent.IncreaseCartProduct -> {
                 increaseCartProduct(event.product)
             }

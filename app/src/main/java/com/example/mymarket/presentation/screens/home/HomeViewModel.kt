@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymarket.R
+import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
@@ -15,6 +16,7 @@ import com.example.mymarket.domain.util.Resource
 import com.example.mymarket.domain.util.StringExt.empty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val marketUseCases: MarketUseCases,
+    private val dataStoreManager: DataStoreManager
     ) : ViewModel() {
 
     private val _state = mutableStateOf(HomeState())
@@ -39,6 +42,7 @@ class HomeViewModel @Inject constructor(
         job = marketUseCases.getProductsUseCase().onEach {
             when (it) {
                 is Resource.Success -> {
+                    dataStoreManager.updateCartCount(marketUseCases.getCartProductCountUseCase().first())
                     _state.value = _state.value.copy(
                         products = it.data ?: emptyList(),
                         isLoading = false
