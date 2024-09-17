@@ -8,14 +8,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +44,7 @@ import com.example.mymarket.presentation.screens.home.HomeEvent
 import com.example.mymarket.presentation.screens.home.HomeViewModel
 import com.example.mymarket.presentation.util.Screen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -84,7 +89,9 @@ fun HomeScreen(
                     backgroundColor = Color.Gray,
                     title = stringResource(id = R.string.select_filters),
                     onClick = {
-                        //onEvent(QuestionAnswerScreenAction.ClearFilters)
+                        viewModel.onEvent(
+                            HomeEvent.UpdateFilterModal(true)
+                        )
                     }
                 )
             }
@@ -126,7 +133,6 @@ fun HomeScreen(
                 }
             )
         }
-
         if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
@@ -138,9 +144,18 @@ fun HomeScreen(
                     .align(Alignment.Center)
             )
         }
-
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+        if (state.filterBottomModal){
+            ModalBottomSheet(
+                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+                onDismissRequest = { viewModel.onEvent(
+                    HomeEvent.UpdateFilterModal(false)
+                ) }
+            ) {
+                FilterScreen(state = state)
+            }
         }
     }
 }

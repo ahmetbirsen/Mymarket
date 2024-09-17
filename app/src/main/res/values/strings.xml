@@ -16,4 +16,13 @@
     <string name="remove_from_cart_successfully">Product removed from cart successfully</string>
     <string name="plus_symbol">+</string>
     <string name="unexpected_error">An unexpected error occurred</string>
+    <string name="sort_by">Sort By</string>
+    <string name="old_to_new">Old to new</string>
+    <string name="new_to_old">New to old</string>
+    <string name="price_high_to_low">Price high to low</string>
+    <string name="price_low_to_hight">Price low to High</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="filter">Filter</string>
 </resources>
