@@ -46,7 +46,7 @@ data class ProductDto(
     @SerializedName("id")
     var id: String = String.empty,
     @SerializedName("isFavorite")
-    var isFavorite: Boolean? = false,
+    var isFavorite: Boolean = false,
     @SerializedName("quantity")
     var quantity: Int = 0,
 )

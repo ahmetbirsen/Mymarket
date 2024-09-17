@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.mymarket.domain.model.CartProduct
+import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
@@ -42,6 +43,14 @@ interface MarketDao {
     INNER JOIN cart_products ON product.id = cart_products.id
         """)
     fun getCartProducts(): Flow<List<ProductDto>>
+
+    @Query("""SELECT 
+            product.*,
+             favorite_products.id AS isFavorite
+        FROM product
+    INNER JOIN favorite_products ON product.id = favorite_products.id
+        """)
+    fun getFavoriteProducts(): Flow<List<FavoriteDto>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: Product)

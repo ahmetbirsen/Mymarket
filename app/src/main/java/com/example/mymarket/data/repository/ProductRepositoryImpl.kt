@@ -3,6 +3,7 @@ package com.example.mymarket.data.repository
 import com.example.mymarket.data.datasource.locale.MarketDao
 import com.example.mymarket.data.datasource.remote.ProductService
 import com.example.mymarket.domain.model.CartProduct
+import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
@@ -72,6 +73,10 @@ class ProductRepositoryImpl @Inject constructor(
 
     override fun getCartProducts(): Flow<List<ProductDto>> {
         return dao.getCartProducts()
+    }
+
+    override fun getFavoriteProducts(): Flow<List<FavoriteDto>> {
+        return dao.getFavoriteProducts()
     }
 
     override fun getCartProductCount(): Flow<Int> {

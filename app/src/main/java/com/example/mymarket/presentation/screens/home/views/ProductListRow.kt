@@ -43,6 +43,7 @@ import com.example.mymarket.presentation.components.ProductCounter
 fun ProductListRow(
     modifier: Modifier = Modifier,
     product: ProductDto,
+    addableProduct : Boolean = true,
     onItemClick: (ProductDto) -> Unit? = {},
     onAddToCartClick : () -> Unit? = {},
     onDecreaseClick: () -> Unit? = {},
@@ -115,23 +116,25 @@ fun ProductListRow(
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
-            if (product.quantity > 0){
-                ProductCounter(
-                    totalCount = product.quantity.toString(),
-                    decreaseClick = {
-                        onDecreaseClick()
-                    },
-                    increaseClick = {
-                        onIncreaseClick()
-                    }
-                )
-            }else{
-                CustomButton(
-                    onClick = {
-                        onAddToCartClick()
-                    },
-                    title = stringResource(id = R.string.add_to_card)
-                )
+            if (addableProduct){
+                if (product.quantity > 0){
+                    ProductCounter(
+                        totalCount = product.quantity.toString(),
+                        decreaseClick = {
+                            onDecreaseClick()
+                        },
+                        increaseClick = {
+                            onIncreaseClick()
+                        }
+                    )
+                }else{
+                    CustomButton(
+                        onClick = {
+                            onAddToCartClick()
+                        },
+                        title = stringResource(id = R.string.add_to_card)
+                    )
+                }
             }
         }
     }
