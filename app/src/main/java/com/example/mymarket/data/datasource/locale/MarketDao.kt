@@ -5,7 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
@@ -51,6 +53,9 @@ interface MarketDao {
     INNER JOIN favorite_products ON product.id = favorite_products.id
         """)
     fun getFavoriteProducts(): Flow<List<FavoriteDto>>
+
+    @RawQuery(observedEntities = [Product::class])
+    suspend fun getFilteredProducts(query: SupportSQLiteQuery): List<ProductDto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: Product)

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mymarket.R
-import com.example.mymarket.domain.util.StringExt.empty
+import com.example.mymarket.core.util.StringExt.empty
 
 @Composable
 fun CustomButton(

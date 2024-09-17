@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.mymarket.R
 import com.example.mymarket.domain.model.ProductDto
-import com.example.mymarket.domain.util.StringExt.empty
-import com.example.mymarket.domain.util.StringExt.formatPrice
+import com.example.mymarket.core.util.StringExt.empty
+import com.example.mymarket.core.util.StringExt.formatPrice
 
 @Composable
 fun BasketItem(

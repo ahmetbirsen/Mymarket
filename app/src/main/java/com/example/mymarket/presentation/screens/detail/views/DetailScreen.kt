@@ -36,8 +36,8 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.mymarket.R
 import com.example.mymarket.domain.model.FavoriteProduct
-import com.example.mymarket.domain.util.StringExt.empty
-import com.example.mymarket.domain.util.StringExt.formatPrice
+import com.example.mymarket.core.util.StringExt.empty
+import com.example.mymarket.core.util.StringExt.formatPrice
 import com.example.mymarket.presentation.components.CustomButton
 import com.example.mymarket.presentation.components.DefaultNavigationBar
 import com.example.mymarket.presentation.components.ProductCounter
@@ -69,6 +69,7 @@ fun DetailScreen(
         }
     ) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize()) {
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()

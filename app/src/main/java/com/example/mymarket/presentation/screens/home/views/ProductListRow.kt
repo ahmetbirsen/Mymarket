@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -30,11 +29,9 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.mymarket.R
-import com.example.mymarket.domain.model.CartProduct
-import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.presentation.components.CustomButton
-import com.example.mymarket.domain.util.StringExt.formatPriceWithZero
+import com.example.mymarket.core.util.StringExt.formatPriceWithZero
 import com.example.mymarket.presentation.components.ProductCounter
 
 

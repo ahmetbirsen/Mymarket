@@ -26,4 +26,7 @@
     <string name="apply_filter">Apply Filter</string>
     <string name="filter">Filter</string>
     <string name="my_favorites">My Favorites</string>
+    <string name="no_favorite_product">No favorite product found !</string>
+    <string name="no_brands_found">Marka bulunamadı</string>
+    <string name="no_models_found">Model bulunamadı</string>
 </resources>

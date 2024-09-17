@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,44 +23,37 @@ import androidx.compose.ui.unit.dp
 fun ItemFilterCheck(
     modifier: Modifier = Modifier,
     text: String,
-    secondText: String? = null,
+    isChecked: Boolean,
+    onChecked: (String, Boolean) -> Unit = { _, _ -> },
     textStyle: TextStyle? = null,
-    secondTextStyle: TextStyle? = null,
-    onChecked: (Boolean) -> Unit = {},
-    checked: MutableState<Boolean> = mutableStateOf(false)
 ) {
-    Row(modifier = modifier
-        .clickable {
-            onChecked(!checked.value)
-            checked.value = !checked.value
-        }
-        .fillMaxWidth()
-        .background(Color.White),
-        verticalAlignment = Alignment.CenterVertically) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CustomCheckBox(
-                modifier = Modifier,
-                checked = checked.value,
-                onCheckedChange = {
-                    onChecked(it)
-                    checked.value = it
-                },
-                uncheckedColor = Color.Blue,
-                checkedBoxColor = Color.Blue,
-                checkMarkColor = Color.White,
-            )
-            Text(
-                modifier = Modifier.padding(start = 16.dp),
-                text = text,
-                style = textStyle ?: TextStyle()
-            )
-        }
+    Row(
+        modifier = modifier
+            .clickable {
+                onChecked(text, !isChecked)
+            }
+            .fillMaxWidth()
+            .background(Color.White),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CustomCheckBox(
+            modifier = Modifier,
+            checked = isChecked,
+            onCheckedChange = {
+                onChecked(text, it)
+            },
+            uncheckedColor = Color.Blue,
+            checkedBoxColor = Color.Blue,
+            checkMarkColor = Color.White,
+        )
+        Text(
+            modifier = Modifier.padding(start = 16.dp),
+            text = text,
+            style = textStyle ?: TextStyle()
+        )
     }
 }
+
 
 @SuppressLint("UnrememberedMutableState")
 @Preview(showSystemUi = true)
@@ -68,8 +62,8 @@ private fun PreviewItem() {
     Column {
         ItemFilterCheck(
             text = "checked",
-            checked = mutableStateOf(true),
-            modifier = Modifier
+            modifier = Modifier,
+            isChecked = true,
         )
     }
 }
