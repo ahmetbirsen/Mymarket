@@ -1,6 +1,7 @@
 package com.example.mymarket.domain.repository
 
 import com.example.mymarket.domain.model.CartProduct
+import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
@@ -24,6 +25,7 @@ interface ProductRepository {
     suspend fun decreaseProductCount(cartProductId: String)
     suspend fun removeProductFromCart(cartProductId: String)
     fun getCartProducts(): Flow<List<ProductDto>>
+    fun getFavoriteProducts(): Flow<List<FavoriteDto>>
     fun getCartProductCount(): Flow<Int>
     suspend fun isFavorite(productId: String): Boolean
 

@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.example.mymarket.presentation.screens.basket.views.BasketScreen
 import com.example.mymarket.presentation.util.Screen
 import com.example.mymarket.presentation.screens.detail.views.DetailScreen
+import com.example.mymarket.presentation.screens.favorites.views.FavoritesScreen
 import com.example.mymarket.presentation.screens.home.views.HomeScreen
 
 @Composable
@@ -31,6 +32,7 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
             )
         }
         composable(route = BottomBarScreen.Favorite.route) {
+            FavoritesScreen(navController = navController)
         }
         composable(route = BottomBarScreen.Profile.route) {
         }

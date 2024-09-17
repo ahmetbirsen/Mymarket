@@ -23,6 +23,7 @@ import com.example.mymarket.domain.usecase.deletefavorite.DeleteFavoriteProductU
 import com.example.mymarket.domain.usecase.getProductById.GetProductByIdUseCase
 import com.example.mymarket.domain.usecase.getcartproductcount.GetCartProductCountUseCase
 import com.example.mymarket.domain.usecase.getcartproducts.GetCartProductsUseCase
+import com.example.mymarket.domain.usecase.getfavoriteproducts.GetFavoriteProductsUseCase
 import com.example.mymarket.domain.usecase.getproducts.GetProductsUseCase
 import com.example.mymarket.domain.usecase.getproductsfromroom.GetProductsFromRoom
 import com.example.mymarket.domain.usecase.increasecartproduct.IncreaseCartProductUseCase
@@ -111,7 +112,8 @@ object NetworkModule {
             decreaseCartProductUseCase = DecreaseCartProductUseCase(productRepository = repository),
             clearCartProducts = ClearCartProducts(productRepository = repository),
             clearFavoriteProducts = ClearFavoriteProducts(productRepository = repository),
-            completeOrderUseCase = CompleteOrderUseCase(productRepository = repository, dataStore)
+            completeOrderUseCase = CompleteOrderUseCase(productRepository = repository, dataStore),
+            getFavoriteProductsUseCase = GetFavoriteProductsUseCase(productRepository = repository)
         )
     }
 }
