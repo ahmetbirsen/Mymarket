@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -35,14 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mymarket.R
-import com.example.mymarket.domain.model.FavoriteProduct
-import com.example.mymarket.domain.util.StringExt.empty
 import com.example.mymarket.presentation.components.CustomButton
 import com.example.mymarket.presentation.components.SearchTextFieldComponent
-import com.example.mymarket.presentation.screens.detail.DetailEvent
 import com.example.mymarket.presentation.screens.home.HomeEvent
 import com.example.mymarket.presentation.screens.home.HomeViewModel
 import com.example.mymarket.presentation.util.Screen
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +52,14 @@ fun HomeScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.onEvent(HomeEvent.GetProducts)
     }
+    LaunchedEffect(key1 = textState.value, block = {
+        if (textState.value.isBlank()){
+            viewModel.onEvent(HomeEvent.GetProducts)
+        }else{
+            delay(300)
+            viewModel.onEvent(HomeEvent.SearchFilter(textState.value))
+        }
+    })
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp)
@@ -100,49 +105,44 @@ fun HomeScreen(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.fillMaxSize(),
                 content = {
-                    items(state.products) { product ->
-                        ProductListRow(
-                            product = product,
-                            onFavoriteClick = {
-                                if (it.isFavorite?.not() == true) {
-                                    viewModel.onEvent(
-                                        HomeEvent.InsertFavorite(it)
-                                    )
-                                }
-                                else{
-                                    viewModel.onEvent(
-                                        HomeEvent.DeleteFavorite(it)
-                                    )
-                                }
-                                viewModel.onEvent(HomeEvent.InsertFavorite(product))
-                            },
-                            onItemClick = {
-                                navController.navigate("${Screen.DetailScreen.route}/${it.id}")
-                            },
-                            onAddToCartClick = {
-                                viewModel.onEvent(HomeEvent.AddToCart(product))
-                            },
-                            onDecreaseClick = {
-                                viewModel.onEvent(HomeEvent.DecreaseCartProduct(product))
-                            },
-                            onIncreaseClick = {
-                                viewModel.onEvent(HomeEvent.IncreaseCartProduct(product))
-                            },
-                        )
+                    state.products?.let {
+                        items(it) { product ->
+                            ProductListRow(
+                                product = product,
+                                onFavoriteClick = {
+                                    if (it.isFavorite?.not() == true) {
+                                        viewModel.onEvent(
+                                            HomeEvent.InsertFavorite(it)
+                                        )
+                                    }
+                                    else{
+                                        viewModel.onEvent(
+                                            HomeEvent.DeleteFavorite(it)
+                                        )
+                                    }
+                                    viewModel.onEvent(HomeEvent.InsertFavorite(product))
+                                },
+                                onItemClick = {
+                                    navController.navigate("${Screen.DetailScreen.route}/${it.id}")
+                                },
+                                onAddToCartClick = {
+                                    viewModel.onEvent(HomeEvent.AddToCart(product))
+                                },
+                                onDecreaseClick = {
+                                    viewModel.onEvent(HomeEvent.DecreaseCartProduct(product))
+                                },
+                                onIncreaseClick = {
+                                    viewModel.onEvent(HomeEvent.IncreaseCartProduct(product))
+                                },
+                            )
+                        }
                     }
+
                 }
             )
         }
-        if (state.error.isNotBlank()) {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colorScheme.errorContainer,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(14.dp)
-                    .align(Alignment.Center)
-            )
+        if (!state.error.isNullOrEmpty()) {
+            ShowError(modifier = Modifier.align(Alignment.Center))
         }
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -154,8 +154,29 @@ fun HomeScreen(
                     HomeEvent.UpdateFilterModal(false)
                 ) }
             ) {
-                FilterScreen(state = state)
+                FilterScreen(
+                    state = state,
+                    getBrands = {viewModel.onEvent(HomeEvent.GetBrands)},
+                    getModels = {viewModel.onEvent(HomeEvent.GetModels)},
+                    onSearchBrand = {viewModel.onEvent(HomeEvent.FilterByBrand(it))},
+                    onSearchModel = {viewModel.onEvent(HomeEvent.FilterByModel(it))},
+                    onApplyFilter = {
+                        println("Ahaa : " +it)
+                    }
+                    )
             }
         }
     }
+}
+
+@Composable
+fun ShowError(modifier: Modifier= Modifier){
+    Text(
+        text = "No products found",
+        color = Color.Red,
+        textAlign = TextAlign.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(14.dp)
+    )
 }

@@ -25,7 +25,6 @@ import com.example.mymarket.domain.usecase.getcartproductcount.GetCartProductCou
 import com.example.mymarket.domain.usecase.getcartproducts.GetCartProductsUseCase
 import com.example.mymarket.domain.usecase.getfavoriteproducts.GetFavoriteProductsUseCase
 import com.example.mymarket.domain.usecase.getproducts.GetProductsUseCase
-import com.example.mymarket.domain.usecase.getproductsfromroom.GetProductsFromRoom
 import com.example.mymarket.domain.usecase.increasecartproduct.IncreaseCartProductUseCase
 import com.example.mymarket.domain.usecase.insertfavorite.InsertFavoriteProductUseCase
 import com.example.mymarket.domain.usecase.isproductfavorite.IsProductFavorite

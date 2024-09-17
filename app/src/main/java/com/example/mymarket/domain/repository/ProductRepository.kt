@@ -3,6 +3,7 @@ package com.example.mymarket.domain.repository
 import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
+import com.example.mymarket.domain.model.FilterCriteria
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
 import kotlinx.coroutines.flow.Flow
@@ -28,5 +29,4 @@ interface ProductRepository {
     fun getFavoriteProducts(): Flow<List<FavoriteDto>>
     fun getCartProductCount(): Flow<Int>
     suspend fun isFavorite(productId: String): Boolean
-
 }

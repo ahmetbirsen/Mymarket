@@ -4,14 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mymarket.R
-import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.domain.model.FavoriteProduct
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.domain.usecase.MarketUseCases
 import com.example.mymarket.domain.util.Resource
 import com.example.mymarket.domain.util.ResourceManager
-import com.example.mymarket.domain.util.StringExt.empty
+import com.example.mymarket.core.util.StringExt.empty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
