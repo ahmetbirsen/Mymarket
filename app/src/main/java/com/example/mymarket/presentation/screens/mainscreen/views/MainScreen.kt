@@ -2,13 +2,19 @@ package com.example.mymarket.presentation.screens.mainscreen.views
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -20,6 +26,7 @@ import com.example.mymarket.presentation.navigation.BottomBarScreen
 import com.example.mymarket.presentation.navigation.BottomNavGraph
 import com.example.mymarket.presentation.screens.mainscreen.MainScreenEvent
 import com.example.mymarket.presentation.screens.mainscreen.MainScreenViewModel
+import okhttp3.internal.wait
 
 
 @Composable
@@ -55,7 +62,9 @@ fun BottomBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation {
+    BottomNavigation(
+        backgroundColor = Color.White
+    ) {
         screens.forEach { screen ->
             AddItem(
                 screen = screen,
@@ -79,7 +88,9 @@ fun RowScope.AddItem(
             if (screen == BottomBarScreen.Basket && itemCount > 0) {
                 BadgedBox(
                     badge = {
-                        Badge { Text(text = itemCount.toString()) }
+                        Badge(
+                            modifier = Modifier.size(18.dp).width(12.dp),
+                            contentColor = Color.White) { Text(text = itemCount.toString(), style = TextStyle(Color.White, textAlign = TextAlign.Center)) }
                     }
                 ) {
                     Icon(

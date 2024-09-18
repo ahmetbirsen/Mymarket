@@ -15,8 +15,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mymarket.R
 import com.example.mymarket.presentation.components.CustomButton
+import com.example.mymarket.presentation.components.DefaultNavigationBar
 import com.example.mymarket.presentation.components.SearchTextFieldComponent
 import com.example.mymarket.presentation.screens.home.HomeEvent
 import com.example.mymarket.presentation.screens.home.HomeViewModel
@@ -53,124 +54,139 @@ fun HomeScreen(
         viewModel.onEvent(HomeEvent.GetProducts)
     }
     LaunchedEffect(key1 = textState.value, block = {
-        if (textState.value.isBlank()){
+        if (textState.value.isBlank()) {
             viewModel.onEvent(HomeEvent.GetProducts)
-        }else{
+        } else {
             delay(300)
             viewModel.onEvent(HomeEvent.SearchFilter(textState.value))
         }
     })
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ) {
-            SearchTextFieldComponent(
-                state = textState,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 16.dp),
-                placeHolder = stringResource(id = R.string.search),
-                placeHolderTextStyle = TextStyle(color = Color.Gray),
-                onDone = {},
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = stringResource(id = R.string.search),
-                        tint = Color.Gray
-                    )
-                }
+    Scaffold(
+        topBar = {
+            DefaultNavigationBar(
+                navController = navController,
+                title = stringResource(id = R.string.e_market),
+                backButtonHidden = true,
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.filters)
-                )
-                CustomButton(
-                    modifier = Modifier.weight(1f),
-                    backgroundColor = Color.Gray,
-                    title = stringResource(id = R.string.select_filters),
-                    onClick = {
-                        viewModel.onEvent(
-                            HomeEvent.UpdateFilterModal(true)
+                SearchTextFieldComponent(
+                    state = textState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp, bottom = 16.dp),
+                    placeHolder = stringResource(id = R.string.search),
+                    placeHolderTextStyle = TextStyle(color = Color.Gray),
+                    onDone = {},
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_search),
+                            contentDescription = stringResource(id = R.string.search),
+                            tint = Color.Gray
                         )
                     }
                 )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize(),
-                content = {
-                    state.products?.let {
-                        items(it) { product ->
-                            ProductListRow(
-                                product = product,
-                                onFavoriteClick = {
-                                    if (it.isFavorite?.not() == true) {
-                                        viewModel.onEvent(
-                                            HomeEvent.InsertFavorite(it)
-                                        )
-                                    }
-                                    else{
-                                        viewModel.onEvent(
-                                            HomeEvent.DeleteFavorite(it)
-                                        )
-                                    }
-                                    viewModel.onEvent(HomeEvent.InsertFavorite(product))
-                                },
-                                onItemClick = {
-                                    navController.navigate("${Screen.DetailScreen.route}/${it.id}")
-                                },
-                                onAddToCartClick = {
-                                    viewModel.onEvent(HomeEvent.AddToCart(product))
-                                },
-                                onDecreaseClick = {
-                                    viewModel.onEvent(HomeEvent.DecreaseCartProduct(product))
-                                },
-                                onIncreaseClick = {
-                                    viewModel.onEvent(HomeEvent.IncreaseCartProduct(product))
-                                },
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(id = R.string.filters)
+                    )
+                    CustomButton(
+                        modifier = Modifier.weight(1f),
+                        backgroundColor = Color.LightGray,
+                        title = stringResource(id = R.string.select_filters),
+                        textColor = Color.Black,
+                        onClick = {
+                            viewModel.onEvent(
+                                HomeEvent.UpdateFilterModal(true)
                             )
                         }
-                    }
-
-                }
-            )
-        }
-        if (!state.error.isNullOrEmpty()) {
-            ShowError(modifier = Modifier.align(Alignment.Center))
-        }
-        if (state.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
-        if (state.filterBottomModal){
-            ModalBottomSheet(
-                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                onDismissRequest = { viewModel.onEvent(
-                    HomeEvent.UpdateFilterModal(false)
-                ) }
-            ) {
-                FilterScreen(
-                    state = state,
-                    getBrands = {viewModel.onEvent(HomeEvent.GetBrands)},
-                    getModels = {viewModel.onEvent(HomeEvent.GetModels)},
-                    onSearchBrand = {viewModel.onEvent(HomeEvent.FilterByBrand(it))},
-                    onSearchModel = {viewModel.onEvent(HomeEvent.FilterByModel(it))},
-                    onApplyFilter = {
-                        println("Ahaa : " +it)
-                    }
                     )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.fillMaxSize(),
+                    content = {
+                        state.products?.let {
+                            items(it) { product ->
+                                ProductListRow(
+                                    product = product,
+                                    onFavoriteClick = { item ->
+                                        if (item.isFavorite) {
+                                            viewModel.onEvent(
+                                                HomeEvent.DeleteFavorite(item)
+                                            )
+                                        } else {
+                                            viewModel.onEvent(
+                                                HomeEvent.InsertFavorite(item)
+                                            )
+                                        }
+                                    },
+                                    onItemClick = { item ->
+                                        navController.navigate("${Screen.DetailScreen.route}/${item.id}")
+                                    },
+                                    onAddToCartClick = {
+                                        viewModel.onEvent(HomeEvent.AddToCart(product))
+                                    },
+                                    onDecreaseClick = {
+                                        viewModel.onEvent(HomeEvent.DecreaseCartProduct(product))
+                                    },
+                                    onIncreaseClick = {
+                                        viewModel.onEvent(HomeEvent.IncreaseCartProduct(product))
+                                    },
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+            if (!state.error.isNullOrEmpty()) {
+                ShowError(modifier = Modifier.align(Alignment.Center))
+            }
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+            if (state.filterBottomModal) {
+                ModalBottomSheet(
+                    containerColor = Color.White,
+                    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+                    onDismissRequest = {
+                        viewModel.onEvent(
+                            HomeEvent.UpdateFilterModal(false)
+                        )
+                    }
+                ) {
+                    FilterScreen(
+                        state = state,
+                        getBrands = { viewModel.onEvent(HomeEvent.GetBrands) },
+                        getModels = { viewModel.onEvent(HomeEvent.GetModels) },
+                        onSearchBrand = { viewModel.onEvent(HomeEvent.FilterByBrand(it)) },
+                        onSearchModel = { viewModel.onEvent(HomeEvent.FilterByModel(it)) },
+                        onApplyFilter = {
+                            println("Ahaa : " + it)
+                        }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun ShowError(modifier: Modifier= Modifier){
+fun ShowError(modifier: Modifier = Modifier) {
     Text(
         text = "No products found",
         color = Color.Red,

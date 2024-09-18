@@ -140,7 +140,7 @@ fun DetailScreen(
                         Text(
                             text = stringResource(
                                 id = R.string.price_with_currency,
-                                state.product.price?.formatPrice() ?: String.empty
+                                state.totalPrice.toString().formatPrice() ?: String.empty
                             )
                         )
                     }
@@ -151,14 +151,14 @@ fun DetailScreen(
                             decreaseClick = {
                                 viewModel.onEvent(
                                     DetailEvent.DecreaseCartProduct(
-                                        state.product ?: return@ProductCounter
+                                        state.product
                                     )
                                 )
                             },
                             increaseClick = {
                                 viewModel.onEvent(
                                     DetailEvent.IncreaseCartProduct(
-                                        state.product ?: return@ProductCounter
+                                        state.product
                                     )
                                 )
                             }
@@ -170,7 +170,7 @@ fun DetailScreen(
                             onClick = {
                                 viewModel.onEvent(
                                     DetailEvent.AddProductToCart(
-                                        state.product ?: return@CustomButton
+                                        state.product
                                     )
                                 )
                             }

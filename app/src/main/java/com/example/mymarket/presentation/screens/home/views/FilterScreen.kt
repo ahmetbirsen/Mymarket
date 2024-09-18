@@ -11,14 +11,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material3.Icon
@@ -26,8 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,7 +30,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -51,7 +45,6 @@ import com.example.mymarket.presentation.components.CustomButton
 import com.example.mymarket.presentation.components.CustomRadioButton
 import com.example.mymarket.presentation.components.ItemFilterCheck
 import com.example.mymarket.presentation.components.SearchTextFieldComponent
-import com.example.mymarket.presentation.screens.home.HomeEvent
 import com.example.mymarket.presentation.screens.home.HomeState
 import kotlinx.coroutines.delay
 
@@ -151,7 +144,7 @@ fun FilterScreen(
             .fillMaxWidth()
             .width(1.dp))
         Text(
-            modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp),
             text = stringResource(id = R.string.brand),
             style = TextStyle(
                 color = Color.LightGray
@@ -192,7 +185,7 @@ fun FilterScreen(
             .width(1.dp))
 
         Text(
-            modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, bottom = 8.dp, top = 8.dp),
             text = stringResource(id = R.string.model),
             style = TextStyle(
                 color = Color.LightGray
@@ -260,8 +253,7 @@ fun ItemFilterRadio(
         .clickable {
             onSelect()
         }
-        .fillMaxWidth()
-        .padding(bottom = 8.dp),
+        .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically) {
         CustomRadioButton(
