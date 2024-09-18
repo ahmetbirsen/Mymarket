@@ -36,6 +36,9 @@ To run this project locally:
 Clone the repository:
 bash
 Kodu kopyala
+
 git clone https://github.com/ahmetbirsen/Mymarket.git
+
+
 Open the project in Android Studio.
 Sync Gradle and run the project on your preferred Android emulator or device.
