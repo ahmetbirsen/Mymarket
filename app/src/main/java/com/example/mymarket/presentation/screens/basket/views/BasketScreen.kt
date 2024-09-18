@@ -1,5 +1,6 @@
 package com.example.mymarket.presentation.screens.basket.views
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -117,9 +118,16 @@ fun BasketScreen(
                     completeButton()
                 }
             }
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.Center).fillMaxSize(),
+                visible = state.myCartProducts.isEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.no_product_in_cart),
+                    modifier = Modifier.align(Alignment.Center).fillMaxSize()
+                )
+            }
         }
     }
-
 }
 
 @Preview

@@ -91,7 +91,9 @@ class DetailViewModel @Inject constructor(
                     is Resource.Success -> {
                         _state.value = _state.value.copy(
                             product = it.data ?: ProductDto(),
-                            isLoading = false
+                            isLoading = false,
+                            totalPrice = if ((it.data?.quantity ?: 0) < 2) (it.data?.price) else (it.data?.price?.toDouble()?.times(
+                                it.data.quantity )).toString()
                         )
                     }
 
@@ -202,8 +204,8 @@ class DetailViewModel @Inject constructor(
         job = marketUseCases.increaseCartProductUseCase(productId = product.id).onEach {
             when (it) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(isLoading = false)
                     getProductById(product.id)
+                    _state.value = _state.value.copy(isLoading = false, totalPrice = (product.price.toDouble() * product.quantity).toString())
                 }
 
                 is Resource.Error -> {
@@ -225,6 +227,7 @@ class DetailViewModel @Inject constructor(
                     is Resource.Success -> {
                         _state.value = _state.value.copy(isLoading = false)
                         getProductById(product.id)
+                        _state.value = _state.value.copy(isLoading = false, totalPrice = (product.price.toDouble() * product.quantity).toString())
                     }
 
                     is Resource.Error -> {

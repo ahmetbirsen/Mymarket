@@ -22,6 +22,7 @@ import com.example.mymarket.core.util.StringExt.empty
 fun CustomButton(
     modifier: Modifier = Modifier,
     title : String = String.empty,
+    textColor : Color = Color.White,
     backgroundColor : Color = Color(0xFF2A59FE),
     onClick : () -> Unit = {}
 ) {
@@ -39,7 +40,7 @@ fun CustomButton(
             text = title,
             style = MaterialTheme.typography.button.copy(
                 textAlign = TextAlign.Center,
-                color = Color.White
+                color = textColor
             )
         )
     }

@@ -9,6 +9,7 @@ data class DetailState (
     override val uiState: UiState = UiState.LOADING,
     val productId : String = String.empty,
     val product: ProductDto = ProductDto(),
+    val totalPrice: String? = null,
     val message: String = String.empty,
     val isLoading: Boolean = false,
     val isFavorite : Boolean = false
