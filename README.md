@@ -1,5 +1,17 @@
 # MyMarket 🛒
 
+https://github.com/user-attachments/assets/864e4956-e381-4c6e-a35f-961a6e5a45a0
+
+https://github.com/user-attachments/assets/392a1b66-4490-463a-863c-c9803cc549db
+
+https://github.com/user-attachments/assets/1c19a5d3-e3e6-4b69-8193-dc8e4f3a8b6d
+
+https://github.com/user-attachments/assets/b27808dd-c6c2-46b2-9d2f-68b554254d2a
+
+https://github.com/user-attachments/assets/39880e8c-5c5f-4c4e-bb63-b61443733960
+
+https://github.com/user-attachments/assets/c1e81ffd-bce1-4186-ad3c-d8e0da2083ad
+
 **MyMarket** is a modern Android application designed to provide a seamless shopping experience using **Kotlin**. The app offers real-time product updates, shopping cart management, the ability to favorite items, and product filtering for enhanced usability. Built with cutting-edge technologies, MyMarket delivers a highly responsive, user-friendly interface, ensuring smooth navigation and efficient performance, all while maintaining persistence and offline capabilities.
 
 ## Overview
