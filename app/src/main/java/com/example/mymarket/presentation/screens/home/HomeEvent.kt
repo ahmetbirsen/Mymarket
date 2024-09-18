@@ -1,5 +1,6 @@
 package com.example.mymarket.presentation.screens.home
 
+import com.example.mymarket.domain.model.FilterCriteria
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
 
@@ -16,4 +17,5 @@ sealed class HomeEvent {
     object GetModels : HomeEvent()
     data class FilterByBrand(val brand: String) : HomeEvent()
     data class FilterByModel(val model: String) : HomeEvent()
+    data class GetFilteredProducts(val filterCriteria: FilterCriteria) : HomeEvent()
 }

@@ -29,4 +29,8 @@ interface ProductRepository {
     fun getFavoriteProducts(): Flow<List<FavoriteDto>>
     fun getCartProductCount(): Flow<Int>
     suspend fun isFavorite(productId: String): Boolean
+
+    suspend fun getFilterProducts(
+        filterCriteria: FilterCriteria
+    ): Flow<List<ProductDto>>
 }

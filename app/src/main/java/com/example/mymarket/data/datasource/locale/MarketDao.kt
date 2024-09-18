@@ -11,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
+import com.example.mymarket.domain.model.FilterCriteria
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,34 @@ interface MarketDao {
         LEFT JOIN favorite_products ON product.id = favorite_products.id
         """)
     fun getProducts(): Flow<List<ProductDto>>
+
+    @Query("""
+    SELECT 
+        product.*, 
+        cart_products.quantity,
+        EXISTS (SELECT id FROM favorite_products WHERE id = product.id) AS isFavorite
+    FROM product 
+    LEFT JOIN cart_products ON product.id = cart_products.id
+    LEFT JOIN favorite_products ON product.id = favorite_products.id
+    WHERE
+        (:brands IS NULL OR product.brand IN (:brands))
+        AND 
+        (:model IS NULL OR product.model IN (:model))
+    ORDER BY
+        CASE
+            WHEN :orderBy = 'OLD_TO_NEW' THEN product.createdAt
+            WHEN :orderBy = 'NEW_TO_OLD' THEN product.createdAt
+            WHEN :orderBy = 'PRICE_HIGH_TO_LOW' THEN product.price
+            WHEN :orderBy = 'PRICE_LOW_TO_HIGH' THEN product.price
+        END
+    """)
+    fun getFilterProducts(
+        brands: List<String>?,
+        model: List<String>?,
+        orderBy: String
+    ): Flow<List<ProductDto>>
+
+
 
     @Query("""SELECT 
         product.*, 

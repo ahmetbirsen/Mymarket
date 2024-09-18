@@ -10,6 +10,7 @@ import com.example.mymarket.domain.usecase.getProductById.GetProductByIdUseCase
 import com.example.mymarket.domain.usecase.getcartproductcount.GetCartProductCountUseCase
 import com.example.mymarket.domain.usecase.getcartproducts.GetCartProductsUseCase
 import com.example.mymarket.domain.usecase.getfavoriteproducts.GetFavoriteProductsUseCase
+import com.example.mymarket.domain.usecase.getfilteredproducts.GetFilteredProductsUseCase
 import com.example.mymarket.domain.usecase.getproducts.GetProductsUseCase
 import com.example.mymarket.domain.usecase.increasecartproduct.IncreaseCartProductUseCase
 import com.example.mymarket.domain.usecase.insertfavorite.InsertFavoriteProductUseCase
@@ -33,5 +34,6 @@ data class MarketUseCases(
     val clearCartProducts: ClearCartProducts,
     val clearFavoriteProducts: ClearFavoriteProducts,
     val completeOrderUseCase: CompleteOrderUseCase,
-    val getFavoriteProductsUseCase: GetFavoriteProductsUseCase
+    val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
+    val getFilteredProductsUseCase: GetFilteredProductsUseCase
 )

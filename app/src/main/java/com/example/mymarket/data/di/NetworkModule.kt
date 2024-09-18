@@ -8,7 +8,6 @@ import androidx.room.Room
 import com.example.mymarket.core.util.dataStore
 import com.example.mymarket.data.datasource.locale.MarketDao
 import com.example.mymarket.data.datasource.locale.MarketDatabase
-import com.example.mymarket.data.datasource.locale.datastore.DataStoreManagement
 import com.example.mymarket.data.datasource.locale.datastore.DataStoreManager
 import com.example.mymarket.data.datasource.remote.ProductService
 import com.example.mymarket.data.repository.ProductRepositoryImpl
@@ -24,6 +23,7 @@ import com.example.mymarket.domain.usecase.getProductById.GetProductByIdUseCase
 import com.example.mymarket.domain.usecase.getcartproductcount.GetCartProductCountUseCase
 import com.example.mymarket.domain.usecase.getcartproducts.GetCartProductsUseCase
 import com.example.mymarket.domain.usecase.getfavoriteproducts.GetFavoriteProductsUseCase
+import com.example.mymarket.domain.usecase.getfilteredproducts.GetFilteredProductsUseCase
 import com.example.mymarket.domain.usecase.getproducts.GetProductsUseCase
 import com.example.mymarket.domain.usecase.increasecartproduct.IncreaseCartProductUseCase
 import com.example.mymarket.domain.usecase.insertfavorite.InsertFavoriteProductUseCase
@@ -112,7 +112,8 @@ object NetworkModule {
             clearCartProducts = ClearCartProducts(productRepository = repository),
             clearFavoriteProducts = ClearFavoriteProducts(productRepository = repository),
             completeOrderUseCase = CompleteOrderUseCase(productRepository = repository, dataStore),
-            getFavoriteProductsUseCase = GetFavoriteProductsUseCase(productRepository = repository)
+            getFavoriteProductsUseCase = GetFavoriteProductsUseCase(productRepository = repository),
+            getFilteredProductsUseCase = GetFilteredProductsUseCase(productRepository = repository)
         )
     }
 }

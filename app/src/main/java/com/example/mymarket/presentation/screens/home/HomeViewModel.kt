@@ -308,9 +308,31 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getFilteredProducts(filterCriteria: FilterCriteria){
+    private fun getFilteredCriteria(filterCriteria: FilterCriteria) {
+       job?.cancel()
+       job = marketUseCases.getFilteredProductsUseCase(filterCriteria).onEach {
+           when (it) {
+               is Resource.Success -> {
+                   dataStoreManager.updateCartCount(
+                       marketUseCases.getCartProductCountUseCase().first()
+                   )
+                   _state.value = _state.value.copy(
+                       products = it.data ?: emptyList(),
+                       isLoading = false,
+                       error = String.empty
+                   )
+               }
 
-    }
+               is Resource.Error -> {
+                   _state.value = _state.value.copy(error = it.message ?: String.empty)
+               }
+
+               is Resource.Loading -> {
+                   _state.value = _state.value.copy(isLoading = true, error = String.empty)
+               }
+           }
+       }.launchIn(viewModelScope)
+   }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
@@ -355,6 +377,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.GetModels -> getModels()
             is HomeEvent.FilterByBrand -> searchFilterBrand(query = event.brand)
             is HomeEvent.FilterByModel -> searchFilterModel(query = event.model)
+            is HomeEvent.GetFilteredProducts -> getFilteredCriteria(filterCriteria = event.filterCriteria)
         }
     }
 }

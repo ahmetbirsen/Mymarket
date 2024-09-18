@@ -176,7 +176,11 @@ fun HomeScreen(
                         onSearchBrand = { viewModel.onEvent(HomeEvent.FilterByBrand(it)) },
                         onSearchModel = { viewModel.onEvent(HomeEvent.FilterByModel(it)) },
                         onApplyFilter = {
-                            println("Ahaa : " + it)
+                            viewModel.onEvent(
+                                HomeEvent.GetFilteredProducts(
+                                    it
+                                )
+                            )
                         }
                     )
                 }

@@ -5,9 +5,11 @@ import com.example.mymarket.data.datasource.remote.ProductService
 import com.example.mymarket.domain.model.CartProduct
 import com.example.mymarket.domain.model.FavoriteDto
 import com.example.mymarket.domain.model.FavoriteProduct
+import com.example.mymarket.domain.model.FilterCriteria
 import com.example.mymarket.domain.model.Product
 import com.example.mymarket.domain.model.ProductDto
 import com.example.mymarket.domain.repository.ProductRepository
+import com.example.mymarket.domain.util.SortOrder
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -84,5 +86,12 @@ class ProductRepositoryImpl @Inject constructor(
     }
     override suspend fun isFavorite(productId: String): Boolean {
         return dao.isProductFavorite(productId) != null
+    }
+
+    override suspend fun getFilterProducts(filterCriteria: FilterCriteria): Flow<List<ProductDto>> {
+        return dao.getFilterProducts(
+            filterCriteria.selectedBrands.ifEmpty { null },
+            filterCriteria.selectedModels.ifEmpty { null },
+            filterCriteria.sortOrder?.name ?: SortOrder.OLD_TO_NEW.name)
     }
 }
