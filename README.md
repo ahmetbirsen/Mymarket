@@ -35,8 +35,6 @@ Installation 📥
 To run this project locally:
 Clone the repository:
 bash
-Kodu kopyala
-
 git clone https://github.com/ahmetbirsen/Mymarket.git
 
 
