@@ -30,13 +30,9 @@ Model: Handles the business logic and data sources (API, local database).
 View: The UI built with Jetpack Compose.
 ViewModel: Mediates between the View and Model, exposing state to the UI via Flow and LiveData.
 
-Installation 📥
-
-To run this project locally:
-Clone the repository:
-bash
-git clone https://github.com/ahmetbirsen/Mymarket.git
-
-
+Setup and Installation
+Clone this repository:
+git clone https://github.com/tolganacar/android-kotlin-english-cards.git
 Open the project in Android Studio.
-Sync Gradle and run the project on your preferred Android emulator or device.
+Sync the project with Gradle files.
+Run the project on an emulator or physical device.
